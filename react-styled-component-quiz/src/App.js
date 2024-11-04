@@ -1,86 +1,21 @@
-import logo from './logo.svg';
 import './App.css';
-import { Route, Routes, NavLink } from 'react-router-dom';
-import styled from 'styled-components';
-
-const HomeDiv = styled.div`
-  margin-top: 10px;
-  padding: 10px;
-  background-color: aliceblue;
-`;
-
-const AboutDiv = styled.div`
-  margin-top: 10px;
-  padding: 10px;
-  background-color: pink;
-`;
-
-const ContactDiv = styled.div`
-  margin-top: 10px;
-  padding: 10px;
-  background-color: yellow;
-`;
-
-const MenuBarDiv = styled.div`
-  background-color: gainsboro;
-  padding: 10px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  text-align: center;
-`;
-
-function Home() {
-  return (
-    <HomeDiv>
-      <h2>Home</h2>
-      Home Page...
-    </HomeDiv>
-  );
-}
-
-function About() {
-  return (
-    <AboutDiv>
-      <h2>About</h2>
-      About Page...
-    </AboutDiv>
-  );
-}
-
-function Contact() {
-  return (
-    <ContactDiv>
-      <h2>Contact</h2>
-      Contact Page...
-    </ContactDiv>
-  );
-}
-
-function MenuBar() {
-  return (
-    <MenuBarDiv>
-      <NavLink to="/">
-        Home
-      </NavLink>
-      <NavLink to="/about">
-        About
-      </NavLink>
-      <NavLink to="/contact">
-        Contact
-      </NavLink>
-    </MenuBarDiv>
-  );
-}
+import { Route, Routes } from 'react-router-dom';
+import Home from './components/Home';
+import About from './components/About';
+import Contact from './components/Contact';
+import MenuBar from './components/MenuBar';
 
 function App() {
   return (
     <div>
       <MenuBar />
-
+      {/* Router는 주소에 따라 화면이 전환될때 사용 */}
+      {/* 조건: URL 주소 */}
+      {/* 리턴: 새로운 UI */}
       <Routes>
-        <Route path='/' element={<Home />}></Route>
-        <Route path='/about' element={<About />}></Route>
-        <Route path='/contact' element={<Contact />}></Route>
+        <Route path='/' element={<Home />} />
+        <Route path='/about' element={<About />} />
+        <Route path='/contact' element={<Contact />} />
       </Routes>
 
     </div>
