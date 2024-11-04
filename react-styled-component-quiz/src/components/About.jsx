@@ -7,11 +7,16 @@ const AboutDiv = styled.div`
   background-color: pink;
 `;
 
-const About = () => (
-  <AboutDiv>
-    <h1>About</h1>
-    About Page...
-  </AboutDiv>
-);
+const About = () => {
+  
+  console.log('About..');  
+
+  return(
+    <AboutDiv>
+      <h1>About</h1>
+      About Page...
+    </AboutDiv>
+  );
+};
 
 export default About;

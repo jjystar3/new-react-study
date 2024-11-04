@@ -6,6 +6,9 @@ import Contact from './components/Contact';
 import MenuBar from './components/MenuBar';
 
 function App() {
+
+  console.log('App..');  
+
   return (
     <div>
       <MenuBar />

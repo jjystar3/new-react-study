@@ -7,11 +7,16 @@ const ContactDiv = styled.div`
   background-color: yellow;
 `;
 
-const Contact = () => (
-  <ContactDiv>
-    <h1>Contact</h1>
-    Contact Page...
-  </ContactDiv>
-);
+const Contact = () => {
+  
+  console.log('Contact..');  
+
+  return(
+    <ContactDiv>
+      <h1>Contact</h1>
+      Contact Page...
+    </ContactDiv>
+  );
+};
 
 export default Contact;

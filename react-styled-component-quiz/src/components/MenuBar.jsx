@@ -20,6 +20,15 @@ const MenuBar = () => (
     <NavLink to="/contact">
       Contact
     </NavLink>
+    {/* <a href="/">
+      Home
+    </a>
+    <a href="/about">
+      About
+    </a>
+    <a href="/contact">
+      Contact
+    </a> */}
   </MenuBarDiv>
 );
 
