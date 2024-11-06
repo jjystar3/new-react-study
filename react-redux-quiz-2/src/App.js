@@ -1,23 +1,17 @@
-import logo from './logo.svg';
-import './App.css';
+import { Todo } from './component/Todo';
 
-function App() {
+// npm install redux react-redux
+
+// todo 앱에서 관리하는 state
+// state를 쓰는 이유: 값이 변경되면 화면을 다시 생성해야함
+// 입력필드의 todo
+// todo 리스트 -> 스토어를 통해서 관리
+
+function App() {  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h3>To-Do List</h3>
+      <Todo></Todo>
     </div>
   );
 }
