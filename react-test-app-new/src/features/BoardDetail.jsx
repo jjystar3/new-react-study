@@ -4,24 +4,60 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
 
-// 게시물 상세 화면: 게시물의 모든 정보를 출력
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useContext } from 'react';
+import { Context } from '../index';
 
 const BoardDetail = () => {
+  
+  // 게시물 데이터
+  // API를 통해서 게시물 데이터를 조회
+  // 조회한 데이터를 화면에 표시
+  let [board, setBoard] = useState(null);
 
-  // 게시물 데이터 (데이터베이스 대신)
-  // const board = null;
-  const board = { no:1, title:'1번', content:'1번입니다', writer:'둘리', regDate:'2024-11-08', modDate:'2024-11-08' }
-
-  // navigate 함수 생성
   const navigate = useNavigate();
+
+  // URL에 포함되어 있는 파라미터 가져오기
+  const params = useParams();
+
+  const {host} = useContext(Context);
+
+  // 게시물 조회 API 호출
+  // useEffect: 컴포넌트가 생성될 때 코드를 한번만 실행
+  useEffect(()=>{
+
+    // 함수 정의
+    const apiCall = async () => {
+      
+      // 조회는 get
+      // 인자: 주소, 헤더 + 파라미터
+      const response = await axios.get(
+        `${host}/board/read?no=${params.no}`, {
+        headers: {
+          Authorization: 'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzIwNzM3ODUsImV4cCI6MTczNDY2NTc4NSwic3ViIjoiYWRtaW4ifQ.Tt-4ddP4h9UeZiyrFs-uPnXLKpOFe2uTvHsQPaSqdbc',
+        }
+      });
+
+      // API 요청에 성공했으면 응답받은 게시물 데이터를 저장
+      // 실패했으면 에러 발생시키기
+      if(response.status === 200){
+        setBoard(response.data); // state 업데이트
+      }else{
+        throw new Error(`api error: ${response.status} ${response.statusText}`);
+      }
+    }
+
+    // 함수 호출
+    apiCall();
+
+  }, [])
 
   return (
     <CustomCard>
       <CustomContainer>
         <h3>게시물 상세</h3>
-
-        {/* 게시물 데이터가 있다면 폼 표시 */}
-        {/* 첫번째조건이 false라면 두번째항은 실행안됨 */}
         { 
           board!==null && 
           <Form>
@@ -51,8 +87,6 @@ const BoardDetail = () => {
             </Form.Group>
 
             <Button variant="primary" onClick={ ()=>{
-              // 게시물 수정화면으로 이동
-              // 주소 예시: /board/modify/1
               navigate(`/board/modify/${board.no}`);
             }} >수정</Button>
 

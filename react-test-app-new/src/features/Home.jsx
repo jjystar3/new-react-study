@@ -1,9 +1,10 @@
 import React from 'react'
 import { CustomCard, CustomContainer } from '../components/Styles'
 
-// 홈 화면을 반환하는 컴포넌트
-
 const Home = () => {
+
+  console.log('Home...');
+  
   return (
     <CustomCard>
       <CustomContainer>

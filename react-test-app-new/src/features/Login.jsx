@@ -3,9 +3,10 @@ import { CustomCard, CustomContainer } from '../components/Styles'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 
-// 로그인 화면을 반환하는 컴포넌트
-
 const Login = () => {
+
+  console.log('Login...');
+  
   return (
     <CustomCard>
       <CustomContainer>
