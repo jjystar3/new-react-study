@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import { useContext } from 'react';
@@ -13,6 +14,8 @@ import { Context } from '../index';
 
 const BoardList = () => {
   
+  const token = useSelector((state) => state.member.token);
+
   // 게시물 리스트를 state에 저장
   let [data, setData] = useState(null);
 
@@ -21,30 +24,25 @@ const BoardList = () => {
   // Context에서 host 데이터 가져오기
   const {host} = useContext(Context);
 
-  async function callAPI(){
-    const response = await axios.get(
-      `${host}/board/list`, {
-      headers: {
-        Authorization: 'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzIwNzM3ODUsImV4cCI6MTczNDY2NTc4NSwic3ViIjoiYWRtaW4ifQ.Tt-4ddP4h9UeZiyrFs-uPnXLKpOFe2uTvHsQPaSqdbc',
-      }
-    });
-  
-    if(response.status !== 200){
-      throw new Error(`api error: ${response.status} ${response.statusText}`);
-    }
-    
-    return response.data;
-  }
-
   useEffect(()=>{
 
-    const getData = async () => {
-      const data = await callAPI();
-      setData(data);
+    const apiCall = async () => {
+      
+      const response = await axios.get(
+        `${host}/board/list`, {
+        headers: {
+          Authorization: token
+        }
+      });
+    
+      if(response.status !== 200){
+        throw new Error(`api error: ${response.status} ${response.statusText}`);
+      }
+      
+      setData(response.data); // 데이터를 상태에 저장
     }
-
-    getData();
-  }, []);
+    apiCall();
+  }, [host, token]);
 
   return (
     <CustomCard>

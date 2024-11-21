@@ -8,12 +8,15 @@ import axios from 'axios';
 import { useContext } from 'react';
 import { Context } from '../index';
 import { useParams, useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 // 해당 게시물 데이터를 출력
 // 제목과 내용은 수정 가능
 
 const BoardModify = () => {
   
+  const token = useSelector((state) => state.member.token);
+
   const navigate = useNavigate();
 
   // 기존 게시물 데이터를 state에 저장
@@ -35,7 +38,7 @@ const BoardModify = () => {
       const response = await axios.get(
         `${host}/board/read?no=${params.no}`, {
         headers: {
-          Authorization: 'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzIwNzM3ODUsImV4cCI6MTczNDY2NTc4NSwic3ViIjoiYWRtaW4ifQ.Tt-4ddP4h9UeZiyrFs-uPnXLKpOFe2uTvHsQPaSqdbc',
+          Authorization: token
         }
       });
 
@@ -50,7 +53,7 @@ const BoardModify = () => {
     // 함수 호출
     apiCall();
 
-  }, []);
+  }, [host, params.no, token]);
 
   // 입력필드의 이벤트 함수
   const handleChange = (event) => {
@@ -79,7 +82,7 @@ const BoardModify = () => {
       board,
       {
         headers: {
-          Authorization: 'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzIwNzM3ODUsImV4cCI6MTczNDY2NTc4NSwic3ViIjoiYWRtaW4ifQ.Tt-4ddP4h9UeZiyrFs-uPnXLKpOFe2uTvHsQPaSqdbc',
+          Authorization: token
         }
       }
     );
@@ -103,7 +106,7 @@ const BoardModify = () => {
       `${host}/board/remove?no=${board.no}`,
       {
         headers: {
-          Authorization: 'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzIwNzM3ODUsImV4cCI6MTczNDY2NTc4NSwic3ViIjoiYWRtaW4ifQ.Tt-4ddP4h9UeZiyrFs-uPnXLKpOFe2uTvHsQPaSqdbc',
+          Authorization: token
         }
       }
     );

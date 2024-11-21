@@ -3,6 +3,7 @@ import { CustomCard, CustomContainer } from '../components/Styles'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from "react-redux";
 
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
@@ -10,8 +11,12 @@ import { useState, useEffect } from 'react';
 import { useContext } from 'react';
 import { Context } from '../index';
 
+const IMG_PATH = '/images/';
+  
 const BoardDetail = () => {
   
+  const token = useSelector((state) => state.member.token);
+
   // 게시물 데이터
   // API를 통해서 게시물 데이터를 조회
   // 조회한 데이터를 화면에 표시
@@ -36,7 +41,7 @@ const BoardDetail = () => {
       const response = await axios.get(
         `${host}/board/read?no=${params.no}`, {
         headers: {
-          Authorization: 'eyJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MzIwNzM3ODUsImV4cCI6MTczNDY2NTc4NSwic3ViIjoiYWRtaW4ifQ.Tt-4ddP4h9UeZiyrFs-uPnXLKpOFe2uTvHsQPaSqdbc',
+          Authorization: token
         }
       });
 
@@ -44,6 +49,7 @@ const BoardDetail = () => {
       // 실패했으면 에러 발생시키기
       if(response.status === 200){
         setBoard(response.data); // state 업데이트
+        
       }else{
         throw new Error(`api error: ${response.status} ${response.statusText}`);
       }
@@ -52,7 +58,7 @@ const BoardDetail = () => {
     // 함수 호출
     apiCall();
 
-  }, [])
+  }, [host, params.no, token])
 
   return (
     <CustomCard>
@@ -85,6 +91,8 @@ const BoardDetail = () => {
               <Form.Label>수정일</Form.Label>
               <Form.Control type="text" value={board.modDate} readOnly/>
             </Form.Group>
+
+            <img alt="imageFile" src={`${IMG_PATH}${board.imgPath}`}></img>
 
             <Button variant="primary" onClick={ ()=>{
               navigate(`/board/modify/${board.no}`);
